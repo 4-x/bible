@@ -1,7 +1,13 @@
 import { useEffect } from "react"
 import { bible } from "../../bible"
 
-export default function Page({ params }) {
+type Params = {
+  params: {
+    id: string
+  }
+}
+
+export default function Page({ params }: Params) {
   let loaded = false
 
   const regex = /\{[^{}]*(\.\.\.|Heb\.)[^{}]*\}/g
