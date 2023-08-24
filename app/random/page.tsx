@@ -6,7 +6,7 @@ export default function Page({ params }) {
   const randomVerse = Math.floor(Math.random() * bible[randomBook].chapters[randomChapter].length)
 
   return (
-    <section>
+    <section className='random-verse'>
       <p>{bible[randomBook].chapters[randomChapter][randomVerse]}</p>
       <p><cite><a href={`/book/${bible[randomBook].abbrev}#_${randomChapter+1}_${randomVerse+1}`}>{bible[randomBook].name} {randomChapter+1}:{randomVerse+1}</a></cite></p>
     </section>

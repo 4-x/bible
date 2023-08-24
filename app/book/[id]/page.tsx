@@ -4,7 +4,8 @@ import { bible } from "../../bible"
 export default function Page({ params }) {
   let loaded = false
 
-  const regex = /\{[^{}]*Heb[^{}]*\}/g
+  const regex = /\{[^{}]*(\.\.\.|Heb\.)[^{}]*\}/g
+
   // let book
   const book = bible.find(book => book.abbrev == params.id)
   const cleanedChapters = book?.chapters.map(chapter => {
@@ -19,7 +20,7 @@ export default function Page({ params }) {
   })
 
   return (
-    <div>
+    <div className="book">
       <h2>{book?.name}</h2>
       {cleanedChapters?.map((chapter, i) => (
         <section key={i}>
@@ -28,11 +29,13 @@ export default function Page({ params }) {
 
             {chapter.map((verse, j) => {
               const verseText = verse.verse.replaceAll('{', '<em>').replaceAll('}', '</em>')
-              const verseNote = verse.note ? verse.note[0].replaceAll('{', '').replaceAll('}', '') : null
+              // const verseNote = verse.note ? verse.note[0].replaceAll('{', '').replaceAll('}', '') : null
+              const verseNote = verse.note?.map(_note => _note.replaceAll('{', '').replaceAll('}', ''))
+
               return (
-                <li key={j} className="verse" id={`_${i+1}_${j+1}`}>
+                <li key={j} className="verse" id={`_${i + 1}_${j + 1}`}>
                   <p dangerouslySetInnerHTML={{ __html: verseText }}></p>
-                  {verseNote ? <p><small>{verseNote}</small></p> : <></>}
+                  {verseNote ? <p>{verseNote.map((_note, k) => <small key={k}>{_note}</small>)}</p> : <></>}
                 </li>
               )
             })}
