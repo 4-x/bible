@@ -1,6 +1,6 @@
 import { bible } from '../bible'
 
-export default function Page({ params }) {
+export default function Page() {
   const randomBook = Math.floor(Math.random() * bible.length)
   const randomChapter = Math.floor(Math.random() * bible[randomBook].chapters.length)
   const randomVerse = Math.floor(Math.random() * bible[randomBook].chapters[randomChapter].length)
