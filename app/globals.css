@@ -31,3 +31,6 @@ ol li:nth-child(n + 10)::before {
 ol li:nth-child(n + 100)::before {
   content: counter(items);
 }
+ol li:target {
+  background-color: yellow;
+}
