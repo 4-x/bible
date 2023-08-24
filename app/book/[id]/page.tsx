@@ -5,8 +5,9 @@ export default function Page({ params }) {
   let loaded = false
 
   const regex = /\{[^{}]*Heb[^{}]*\}/g
+  // let book
   const book = bible.find(book => book.abbrev == params.id)
-  book.cleanedChapters = book?.chapters.map(chapter => {
+  const cleanedChapters = book?.chapters.map(chapter => {
     return chapter.map(verse => {
       const note = verse.match(regex)
       const cleanVerse = verse.replace(regex, '')
@@ -20,7 +21,7 @@ export default function Page({ params }) {
   return (
     <div>
       <h2>{book?.name}</h2>
-      {book?.cleanedChapters.map((chapter, i) => (
+      {cleanedChapters?.map((chapter, i) => (
         <section key={i}>
           <h3>Chapter {i + 1}</h3>
           <ol>
@@ -29,7 +30,7 @@ export default function Page({ params }) {
               const verseText = verse.verse.replaceAll('{', '<em>').replaceAll('}', '</em>')
               const verseNote = verse.note ? verse.note[0].replaceAll('{', '').replaceAll('}', '') : null
               return (
-                <li key={j} className="verse">
+                <li key={j} className="verse" id={`_${i+1}_${j+1}`}>
                   <p dangerouslySetInnerHTML={{ __html: verseText }}></p>
                   {verseNote ? <p><small>{verseNote}</small></p> : <></>}
                 </li>
