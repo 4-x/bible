@@ -17,14 +17,31 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
 a:hover {
   text-decoration: underline;
 }
+
 h1 a:hover {
   text-decoration: none;
 }
+
 h1 a:hover::after {
   content: '**';
+}
+
+button {
+  border: none;
+  outline: none;
+  padding: none;
+  margin: none;
+  font: inherit;
+  font-size: inherit;
+  background-color: transparent;
+}
+
+blockquote {
+  margin: 0;
 }
 
 .verse {

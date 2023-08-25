@@ -1,23 +1,30 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { langs, locales } from '../api/locales'
 import { BibleBook } from '../types'
-import * as i18nBooks from '../api/bible-i18n-book-names'
 
-export default function Random({ lang, _bibleJSON }: { lang: string, _bibleJSON: BibleBook[] }) {
-  const bookNames: { [index: string]: i18nBooks.BibleBookNames } = i18nBooks
-  const randomBook = Math.floor(Math.random() * _bibleJSON.length)
-  const randomChapter = Math.floor(Math.random() * _bibleJSON[randomBook].chapters.length)
-  const randomVerse = Math.floor(Math.random() * _bibleJSON[randomBook].chapters[randomChapter].length)
-  const randomVerseHTML = _bibleJSON[randomBook].chapters[randomChapter][randomVerse].replaceAll('{', '<em>').replaceAll('}', '</em>')
-  const bookName = (lang=='en-US'||lang=='en-UK')?_bibleJSON[randomBook].name:bookNames[lang][_bibleJSON[randomBook].name]
+export default function Random({ lang }: { lang: string }) {
+  const [bibleJSON, setBibleJSON] = useState({ verseText: '', bookName: '', chapterNumber: 0, verseNumber: 0, abbrev: '' })
+
+  const getRandomVerse = () => {
+    const someData = fetch(`/${lang}/api`).then(data => data.json()).then(json => setBibleJSON(json))
+  }
+
+  let randomVerseHTML
+  useEffect(() => {
+    getRandomVerse()
+  }, [])
+
   return (
     <>
-      <aside className='random-verse'>
-        <p dangerouslySetInnerHTML={{ __html: randomVerseHTML }} suppressHydrationWarning></p>
-        <p><cite><a href={`/${lang}/book/${_bibleJSON[randomBook].abbrev}#_${randomChapter + 1}_${randomVerse + 1}`} suppressHydrationWarning>{bookName} {randomChapter + 1}:{randomVerse + 1}</a></cite></p>
-      </aside>
+      {bibleJSON.verseNumber ?
+        <aside className='random-verse'>
+          <blockquote><p dangerouslySetInnerHTML={{ __html: bibleJSON.verseText.replaceAll('{', '<em>').replaceAll('}', '</em>') }} suppressHydrationWarning></p></blockquote>
+          <p><cite><a href={`/${lang}/book/${bibleJSON.abbrev}#_${bibleJSON.chapterNumber + 1}_${bibleJSON.verseNumber + 1}`} suppressHydrationWarning>{bibleJSON.bookName} {bibleJSON.chapterNumber + 1}:{bibleJSON.verseNumber + 1}</a></cite></p>
+          <button onClick={getRandomVerse}>⚡️</button>
+        </aside> : <></>
+      }
     </>
   )
 }

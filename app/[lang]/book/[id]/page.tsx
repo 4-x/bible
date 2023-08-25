@@ -4,6 +4,7 @@ import path from "path"
 import { promises as fs } from 'fs'
 import { langs, locales } from '../../api/locales'
 import { BibleBook } from "../../types"
+import { theBible } from "../../api/bible-i18n-book-names"
 
 type Params = {
   params: {
@@ -31,9 +32,13 @@ export default async function Page({ params: { lang, id } }: Params) {
     })
   })
 
+  const langRef = theBible.find(book => {
+    return book.code == lang.substring(0, 2)
+  })
+
   return (
     <div className="book">
-      <h2>{book?.name}</h2>
+      <h2>{langRef && book ? langRef.books[book.name] : <></>}</h2>
       {cleanedChapters?.map((chapter, i) => (
         <section key={i}>
           <h3>Chapter {i + 1}</h3>

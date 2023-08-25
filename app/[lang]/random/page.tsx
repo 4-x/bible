@@ -13,14 +13,14 @@ export default async function Page({ params: { lang } }: { params: { lang: strin
 
   return (
     <>
-      <Random lang={lang} _bibleJSON={_bibleJSON} />
+      <Random lang={lang} />
     </>
   )
 }
 
 export async function generateStaticParams() {
-  const staticParamsArr = locales.map(lang=>{
-    return {lang:lang}
+  const staticParamsArr = locales.map(lang => {
+    return { lang: lang }
   })
 
   return staticParamsArr

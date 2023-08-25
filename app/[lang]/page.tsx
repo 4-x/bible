@@ -6,20 +6,26 @@ import path from 'path'
 import { promises as fs } from 'fs'
 import { langs, locales } from './api/locales'
 import * as i18nBooks from './api/bible-i18n-book-names'
+import Random from './random/page'
+import { theBible } from './api/bible-i18n-book-names'
 
 export default async function Home({ params: { lang } }: { params: { lang: string } }) {
-  const bookNames: { [index:string]: i18nBooks.BibleBookNames } = i18nBooks
+  const langRef = theBible.find(book => {
+    return book.code == lang.substring(0, 2)
+  })
+
 
   return (
     <main className={styles.main}>
+      <Random params={{ lang }} />
       <ol>{bible.map(book => {
         return (
           <li
             key={book.abbrev}
           >
-            <Link href={`${lang}/book/${book.abbrev}`}>
-              {(lang != 'en-US' && lang!= 'en-UK') ? bookNames[lang][book.name] : book.name}
-            </Link>
+            {langRef?.books ? <Link href={`${lang}/book/${book.abbrev}`}>
+              {langRef.books[book.name]}
+            </Link> : <></>}
           </li>
         )
       })}</ol>
