@@ -8,6 +8,7 @@ import { langs, locales } from './api/locales'
 import * as i18nBooks from './api/bible-i18n-book-names'
 
 export default async function Home({ params: { lang } }: { params: { lang: string } }) {
+  const bookNames: { [index:string]: i18nBooks.BibleBookNames } = i18nBooks
 
   return (
     <main className={styles.main}>
@@ -17,7 +18,7 @@ export default async function Home({ params: { lang } }: { params: { lang: strin
             key={book.abbrev}
           >
             <Link href={`${lang}/book/${book.abbrev}`}>
-              {(lang != 'en-US' && lang!= 'en-UK') ? i18nBooks[lang][book.name] : book.name}
+              {(lang != 'en-US' && lang!= 'en-UK') ? bookNames[lang][book.name] : book.name}
             </Link>
           </li>
         )

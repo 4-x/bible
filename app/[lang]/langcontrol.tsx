@@ -3,7 +3,7 @@
 import { locales } from './api/locales'
 
 
-export default function LangControl({lang}) {
+export default function LangControl({lang}:{lang:string}) {
   return (
     <select
       name="Language"
@@ -11,14 +11,9 @@ export default function LangControl({lang}) {
       defaultValue={lang}
       onChange={(evt) => {
         const _path = location.pathname
-        console.log('path',_path)
         const _newPathArr = location.pathname.split('/')
-        console.log(_newPathArr)
         _newPathArr[1] = evt.currentTarget.value
-        console.log(_newPathArr)
         const _newPath = _newPathArr.join('/')
-        console.log('old href', location.href)
-        console.log('new path', _newPath)
         location.replace(location.href.replace(_path,_newPath))
       }}
     >
