@@ -1,4 +1,8 @@
-export const langs = {
+interface Langs {
+  readonly [key: string]: string
+}
+
+export const langs: Langs = {
   'fr': 'fr_apee',
   'es': 'es_rvr',
   'en-US': 'en_kjv',

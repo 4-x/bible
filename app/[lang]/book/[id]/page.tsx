@@ -2,7 +2,8 @@ import { useEffect } from "react"
 import { bible } from "../../bible"
 import path from "path"
 import { promises as fs } from 'fs'
-import {langs} from '../../api/locales'
+import { langs } from '../../api/locales'
+import { BibleBook } from "../../types"
 
 type Params = {
   params: {
@@ -12,15 +13,13 @@ type Params = {
 }
 
 export default async function Page({ params: { lang, id } }: Params) {
-
   let loaded = false
-
   const jsonDirectory = path.join(process.cwd(), 'app/bible/json')
   let _bible = await fs.readFile(jsonDirectory + `/${langs[lang]}.json`, 'utf8')
-  _bible = JSON.parse(_bible.trim())
+  let _bibleJSON: BibleBook[] = JSON.parse(_bible.trim())
 
   const regex = /\{[^{}]*(\.\.\.|Heb\.)[^{}]*\}/g
-  const book = _bible.find(book => book.abbrev == id)
+  const book = _bibleJSON.find(book => book.abbrev == id)
   const cleanedChapters = book?.chapters.map(chapter => {
     return chapter.map(verse => {
       const note = verse.match(regex)
@@ -42,7 +41,6 @@ export default async function Page({ params: { lang, id } }: Params) {
 
             {chapter.map((verse, j) => {
               const verseText = verse.verse.replaceAll('{', '<em>').replaceAll('}', '</em>')
-              // const verseNote = verse.note ? verse.note[0].replaceAll('{', '').replaceAll('}', '') : null
               const verseNote = verse.note?.map(_note => _note.replaceAll('{', '').replaceAll('}', ''))
 
               return (
