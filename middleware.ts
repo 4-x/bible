@@ -1,6 +1,7 @@
 import { match } from '@formatjs/intl-localematcher'
 import Negotiator from 'negotiator'
 import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
 import { locales } from './app/[lang]/api/locales'
 
@@ -9,13 +10,13 @@ let languages = new Negotiator({ headers }).languages()
 let defaultLocale = 'en-US'
 
 // Get the preferred locale, similar to above or using a library
-function getLocale(request) {
+function getLocale(request: NextRequest) {
 
   match(languages, locales, defaultLocale) // -> 'en-US'
   return match(languages, locales, defaultLocale)
 }
 
-export function middleware(request) {
+export function middleware(request : NextRequest) {
   // Check if there is any supported locale in the pathname
   const pathname = request.nextUrl.pathname
   const pathnameIsMissingLocale = locales.every(
