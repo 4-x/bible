@@ -1,7 +1,7 @@
 // import { bible } from '../bible'
 import path from 'path'
 import { promises as fs } from 'fs'
-import { langs } from '../api/locales'
+import { langs, locales } from '../api/locales'
 import Link from 'next/link'
 import { BibleBook } from '../types'
 
@@ -24,4 +24,12 @@ export default async function Page({ params: { lang } }: { params: { lang: strin
       </section>
     </>
   )
+}
+
+export async function generateStaticParams() {
+  const staticParamsArr = locales.map(lang=>{
+    return {lang}
+  })
+
+  return staticParamsArr
 }
