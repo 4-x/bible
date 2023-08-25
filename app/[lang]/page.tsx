@@ -5,16 +5,22 @@ import Link from 'next/link'
 import path from 'path'
 import { promises as fs } from 'fs'
 import { langs, locales } from './api/locales'
+import * as i18nBooks from './api/bible-i18n-book-names'
 
 export default async function Home({ params: { lang } }: { params: { lang: string } }) {
 
   return (
     <main className={styles.main}>
-      <ul>
-        {locales.map((language, i) => <li key={i}><Link href={language}>{language}</Link></li>)}
-      </ul>
       <ol>{bible.map(book => {
-        return (<li key={book.abbrev}><Link href={`${lang}/book/${book.abbrev}`}>{book.name}</Link></li>)
+        return (
+          <li
+            key={book.abbrev}
+          >
+            <Link href={`${lang}/book/${book.abbrev}`}>
+              {(lang != 'en-US' && lang!= 'en-UK') ? i18nBooks[lang][book.name] : book.name}
+            </Link>
+          </li>
+        )
       })}</ol>
     </main>
   )

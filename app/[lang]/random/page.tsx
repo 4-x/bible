@@ -14,7 +14,7 @@ export default async function Page({ params: { lang } }: { params: { lang: strin
   const randomBook = Math.floor(Math.random() * _bibleJSON.length)
   const randomChapter = Math.floor(Math.random() * _bibleJSON[randomBook].chapters.length)
   const randomVerse = Math.floor(Math.random() * _bibleJSON[randomBook].chapters[randomChapter].length)
-  console.log(randomVerse)
+
   return (
     <>
       <section className='random-verse'>
