@@ -20,7 +20,7 @@ export default async function Page({ params: { lang } }: { params: { lang: strin
       <h1><Link href={`/${lang}`}>KJV Bible</Link></h1>
       <section className='random-verse'>
         <p>{_bibleJSON[randomBook].chapters[randomChapter][randomVerse]}</p>
-        <p><cite><Link href={`/${lang}/book/${_bibleJSON[randomBook].abbrev}#_${randomChapter + 1}_${randomVerse + 1}`}>{_bible[randomBook].name} {randomChapter + 1}:{randomVerse + 1}</Link></cite></p>
+        <p><cite><Link href={`/${lang}/book/${_bibleJSON[randomBook].abbrev}#_${randomChapter + 1}_${randomVerse + 1}`}>{_bibleJSON[randomBook].name} {randomChapter + 1}:{randomVerse + 1}</Link></cite></p>
       </section>
     </>
   )
