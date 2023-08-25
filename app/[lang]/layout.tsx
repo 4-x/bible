@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
 
   return (
-    <html>
+    <html lang={params.lang}>
       <body className={inter.className}>
         <header>
           <h1>
