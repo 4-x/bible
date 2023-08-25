@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { bible } from "../../bible"
 import path from "path"
 import { promises as fs } from 'fs'
-import { langs } from '../../api/locales'
+import { langs, locales } from '../../api/locales'
 import { BibleBook } from "../../types"
 
 type Params = {
@@ -60,11 +60,16 @@ export default async function Page({ params: { lang, id } }: Params) {
 }
 
 export async function generateStaticParams() {
-  return bible.map(book => {
-    return {
-      id: book.abbrev
-    }
+  const staticParamsArr = bible.flatMap(book => {
+    return locales.map(lang => {
+      return {
+        id: book.abbrev,
+        lang: lang
+      }
+    })
   })
+
+  return staticParamsArr
 }
 
 export const dynamicParams = false
