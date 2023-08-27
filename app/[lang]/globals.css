@@ -93,3 +93,28 @@ ol li:nth-child(n + 100)::before {
 ol li:target {
   background-color: yellow;
 }
+
+/* SELECT MENU */
+div.lang-select {
+  position: relative;
+  font-family: inherit;
+  width: 5rem;
+  position: fixed;
+  top: 0.5rem;
+  right: 0.5rem;
+  cursor: pointer;
+}
+select {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  text-align: right;
+}
+/* .lang-select::after {
+  content: "▾";
+} */
