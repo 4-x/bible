@@ -433,7 +433,7 @@ export const theBible: LangRef[] = [
   // { name: '聖書', language: 'Japanese', code: 'ja' },
   // { name: 'Sacro Bibbia', language: 'Italian', code: 'it' },
   // { name: 'A Bíblia Sagrada', language: 'Portuguese', code: 'pt' },
-  // { name: 'Библия', language: 'Russian', code: 'ru', books: ru },
+  { name: 'Библия', language: 'Russian', code: 'ru', books: ru },
   // { name: 'الكتاب المقدس', language: 'Arabic', code: 'ar' },
   // { name: 'होली बाइबल', language: 'Hindi', code: 'hi' },
   // { name: '성경', language: 'Korean', code: 'ko' },
